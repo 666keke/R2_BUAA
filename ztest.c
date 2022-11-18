@@ -1,110 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int find(int x[], int key, int n) {
-    int j;
-    for (j = 0; j < n; j++)
-        if (x[j] == key)
-            return j;
-    return -1;
-}
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
-int main() {
-    int a[1001], i = 1, temp, result, h = 0, result1, temp1;
-    scanf("%d", &a[0]);
-    while (~scanf("%d", &a[i])) {
-        if (a[i] > a[i - 1])
-            temp = a[i];
-        else
-            temp = a[i - 1];
-        result = find(a, a[i], i);
-        if (result == -1) {
-            h = 0;
-            printf("%d\n", temp);
-        } else {
-            h = 1;
-            temp1 = 2 * a[i];
-            for (int k = 0; k < i; k++) {
-                result1 = find(a, temp1, i);
-                if (result1 == -1) {
-                    temp += a[i];
-                    printf("%d\n", temp);
-                } else {
-                    temp += temp1;
-                    temp1 *= 2;
-                    printf("%d\n", temp);
+int main(int argc, char *argv[]) {
+    int n, m, K, Q, time, num, j;
+    scanf("%d%d%d%d", &n, &m, &K, &Q);
+    int a[25], b[25], c[25], d[25], M[25], N[25];
+    for (int i = 0; i < K; i++) scanf("%d%d%d%d", &a[i], &b[i], &c[i], &d[i]);
+    for (int i = 0; i < Q; i++) {
+        time = 0;
+        scanf("%d%d", &M[i], &N[i]);
+        for (int i = 0; i < K; i++) {
+            if (M[i] >= a[i] && M[i] <= c[i] && N[i] >= b[i] && N[i] <= d[i]) time++;
+        }
+        if (time != 0) {
+            for (j = K - 1; j >= 0; j--) {
+                if (M[j] >= a[j] && M[j] <= c[j] && N[j] >= b[j] && N[j] <= d[j]) {
+                    num = j + 1;
+                    break;
                 }
             }
         }
-        i++;
-    }
-    if (h == 0) {
-        for (int j = 0; j <= i; j++) {
-            printf("%d ", a[j]);
-        }
-    }
-    if (h == 1) {
-        printf("%d", temp);
+        if (time == 0) printf("N\n");
+        else printf("Y %d %d\n", time, num);
     }
     return 0;
-
 }
-
-//#include<stdio.h>
-//int main()
-//{
-//    int hour1,hour2,min1,min2,uhour1,uhour2,umin1,umin2,sum1,sum2,utc1,utc2;
-//    char u1,u2;
-//    scanf("%d:%d %c%d",&hour1,&min1,&u1,&utc1);
-//    scanf("%d:%d %c%d",&hour2,&min2,&u2,&utc2);
-//    uhour1=utc1/100;
-//    uhour2=utc2/100;
-//    umin1=utc1%100;
-//    umin2=utc2%100;
-//    if(u1=='+')
-//    {
-//        sum1=hour1*60+min1-uhour1*60-umin1;
-//        if(sum1<0)
-//        {
-//            sum1=24*60+sum1;
-//        }
-//    }
-//    else if(u1=='-')
-//    {
-//        sum1=hour1*60+min1+uhour1*60+umin1;
-//        if(sum1>=24*60)
-//        {
-//            sum1=sum1-24*60;
-//        }
-//    }
-//    else if(u1==' ')
-//    {
-//        sum1=hour1*60+min1+uhour1*60+umin1;
-//    }
-//    if(u2=='+')
-//    {
-//        sum2=hour2*60+min2-uhour2*60-umin2;
-//        if(sum2<0)
-//        {
-//            sum2=24*60+sum2;
-//        }
-//    }
-//    else if(u2=='-')
-//    {
-//        sum2=hour2*60+min2+uhour2*60+umin2;
-//        if(sum2>=24*60)
-//        {
-//            sum2=sum2-24*60;
-//        }
-//    }
-//    else if(u2==' ')
-//    {
-//        sum2=hour2*60+min2-uhour2*60-umin2;
-//    }
-//    if(sum1>sum2)
-//        printf("1");
-//    else if(sum1<sum2)
-//        printf("2");
-//    else
-//        printf("Same Time");
-//    return 0;
-//}
