@@ -1,29 +1,41 @@
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include <stdlib.h>
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
 
-int main(int argc, char *argv[]) {
-    int n, m, K, Q, time, num, j;
-    scanf("%d%d%d%d", &n, &m, &K, &Q);
-    int a[25], b[25], c[25], d[25], M[25], N[25];
-    for (int i = 0; i < K; i++) scanf("%d%d%d%d", &a[i], &b[i], &c[i], &d[i]);
-    for (int i = 0; i < Q; i++) {
-        time = 0;
-        scanf("%d%d", &M[i], &N[i]);
-        for (int i = 0; i < K; i++) {
-            if (M[i] >= a[i] && M[i] <= c[i] && N[i] >= b[i] && N[i] <= d[i]) time++;
+int main() {
+    int a, b, c, d, op;
+    while (~scanf("%d/%d %d/%d %d", &a, &b, &c, &d, &op)) {
+        int fz, fm;
+        switch (op) {
+            case 1:
+                fz = a * d + c * b, fm = b * d;
+                break;
+            case 2:
+                fz = a * d - c * b, fm = b * d;
+                break;
+            case 3:
+                fz = a * c, fm = b * d;
+                break;
+            case 4:
+                fz = a * d, fm = b * c;
+                break;
         }
-        if (time != 0) {
-            for (j = K - 1; j >= 0; j--) {
-                if (M[j] >= a[j] && M[j] <= c[j] && N[j] >= b[j] && N[j] <= d[j]) {
-                    num = j + 1;
-                    break;
-                }
-            }
-        }
-        if (time == 0) printf("N\n");
-        else printf("Y %d %d\n", time, num);
+        int bs = 0;
+        if (fz < 0)
+            bs = 1, fz = -fz;
+        if (bs)
+            printf("-");
+        if (fz % fm == 0)
+            printf("%d\n", fz / fm);
+        else
+            printf("%d/%d\n", fz / gcd(fz, fm), fm / gcd(fz, fm));
     }
     return 0;
 }
